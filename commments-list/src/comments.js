@@ -1,11 +1,5 @@
 import {ADD_COMMENT, EDIT_COMMENT, REMOVE_COMMENT, THUMB_DOWN_COMMENT, THUMB_UP_COMMENT} from "./actions";
 
-/*is that necessary ??*/
-const initialState = {
-    comments: [],
-    users: []
-};
-
 function comments(state = [], action) {
     switch (action.type) {
         case ADD_COMMENT:
@@ -14,7 +8,7 @@ function comments(state = [], action) {
                 text: action.text,
                 votes: 0
             }
-                , ...state.comments
+                , ...state
             ];
         case REMOVE_COMMENT:
             return state.comments.filter(comment => comment.id !== action.id);
@@ -30,6 +24,7 @@ function comments(state = [], action) {
                 if (comment.id === action.id) {
                     return {...comment, votes: comment.votes + 1}
                 }
+                return comment;
             });
 
         case THUMB_DOWN_COMMENT:
@@ -37,6 +32,7 @@ function comments(state = [], action) {
                 if (comment.id === action.id) {
                     return {...comment, votes: comment.votes - 1}
                 }
+                return comment;
             });
         default:
             return state;
